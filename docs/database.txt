@@ -1,0 +1,7 @@
+CREATE TABLE funcionario (
+    id INT(6) AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(30) NOT NULL,
+    sobrenome VARCHAR(80) NOT NULL,
+    email VARCHAR(50),
+    celular VARCHAR(20)
+)
