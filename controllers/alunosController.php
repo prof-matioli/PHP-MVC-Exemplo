@@ -1,12 +1,12 @@
 <?php
-class FuncionariosController
+class AlunosController
 {
     private $conectar;
     private $Connection;
     public function __construct()
     {
         require_once __DIR__ . "/../core/conectar.php";
-        require_once __DIR__ . "/../models/funcionario.php";
+        require_once __DIR__ . "/../models/aluno.php";
         $this->conectar = new Conectar();
         $this->Connection = $this->conectar->Connection();
     }
@@ -45,15 +45,17 @@ class FuncionariosController
     public function index()
     {
         //Cria o objeto funcionario
-        $funcionario = new Funcionario($this->Connection);
+        $aluno = new Aluno($this->Connection);
         //Obtem uma lista com todos os funcionarios
-        $funcionarios = $funcionario->getAll();
+        $alunos = $aluno->getAll();
+
         //Carrega a View index e passa os valores para ela
         $this->view("index", array(
-            "funcionario" => $funcionarios,
-            "titulo" => "CADASTRO DE FUNCIONÁRIOS"
+            "aluno" => $alunos,
+            "titulo" => "CADASTRO DE ALUNOS"
         )
         );
+
     }
     /**
      * Carrega a home page de funcionarios com a lista
@@ -63,13 +65,13 @@ class FuncionariosController
     public function detalhe()
     {
         //Carrega o model
-        $modelo = new Funcionario($this->Connection);
+        $modelo = new Aluno($this->Connection);
         //Recupera o funcionario do BD
-        $funcionario = $modelo->getById($_GET["id"]);
+        $aluno = $modelo->getById($_GET["id"]);
         //Carrega a View de detalhe e passa os valores para ela
         $this->view("detalhe", array(
-            "funcionario" => $funcionario,
-            "titulo" => "Detalhe Funcionário"
+            "aluno" => $aluno,
+            "titulo" => "Detalhe Aluno"
         )
         );
     }
@@ -80,14 +82,14 @@ class FuncionariosController
     public function criar()
     {
         if (isset($_POST["nome"])) {
-            $funcionario = new Funcionario($this->Connection);
-            $funcionario->setNome($_POST["nome"]);
-            $funcionario->setSobrenome($_POST["sobrenome"]);
-            $funcionario->setEmail($_POST["email"]);
-            $funcionario->setCelular($_POST["celular"]);
-            $save = $funcionario->save();
+            $aluno = new Aluno($this->Connection);
+            $aluno->setNome($_POST["nome"]);
+            $aluno->setRa($_POST["ra"]);
+            $aluno->setEmail($_POST["email"]);
+            $aluno->setCelular($_POST["celular"]);
+            $save = $aluno->save();
         }
-        header('Location: index.php');
+        header('Location: index.php?controller=alunos');
     }
     /**
      * Atualiza empregado a partir dos parametros
@@ -95,17 +97,17 @@ class FuncionariosController
      */
     public function atualizar()
     {
-        if (isset($_POST["id"])) {
+        if (isset($_POST["idaluno"])) {
             //Cria um usuario
-            $funcionario = new Funcionario($this->Connection);
-            $funcionario->setId($_POST["id"]);
-            $funcionario->setNome($_POST["nome"]);
-            $funcionario->setSobrenome($_POST["sobrenome"]);
-            $funcionario->setEmail($_POST["email"]);
-            $funcionario->setCelular($_POST["celular"]);
-            $save = $funcionario->update();
+            $aluno = new Aluno($this->Connection);
+            $aluno->setId($_POST["idaluno"]);
+            $aluno->setNome($_POST["nome"]);
+            $aluno->setRa($_POST["ra"]);
+            $aluno->setEmail($_POST["email"]);
+            $aluno->setCelular($_POST["celular"]);
+            $save = $aluno->update();
         }
-        header('Location: index.php');
+        header('Location: index.php?controller=alunos');
     }
 
 
@@ -114,10 +116,10 @@ class FuncionariosController
         if (isset($_GET["id"])) {
             $id = $_GET["id"];
             //Cria um usuario
-            $funcionario = new Funcionario($this->Connection);
-            $funcionario->deleteById($id);
+            $aluno = new Aluno($this->Connection);
+            $aluno->deleteById($id);
         }
-        header('Location: index.php');
+        header('Location: index.php?controller=alunos');
     }
 
     /**
@@ -126,8 +128,8 @@ class FuncionariosController
      */
     public function view($view, $data)
     {
-        $dados = $data;
-        require_once __DIR__ . "/../views/funcionarios/" . $view . "View.php";
+        $dados = $data;  
+        require_once __DIR__ . "/../views/alunos/" . $view . "View.php";
     }
 }
 ?>

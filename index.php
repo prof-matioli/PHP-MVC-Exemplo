@@ -20,6 +20,11 @@ function carregarControlador($controller){
             require_once $strFileController;
             $controllerObj=new FuncionariosController();
             break;
+        case 'alunos':
+                $strFileController=getcwd().'/controllers/alunosController.php';
+                require_once $strFileController;
+                $controllerObj=new AlunosController();
+                break;
         default:
             $strFileController=getcwd().'/controllers/'.CONTROLLER_DEFAULT.'Controller.php';
             require_once $strFileController;
